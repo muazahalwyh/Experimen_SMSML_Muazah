@@ -1,17 +1,33 @@
+- Membuat environment baru
+```
 Python -m venv env
-.\env\Scripts\activate #windows
+```
+
+- Mengaktifkan environment
+```
+\env\Scripts\activate #windows
 source env/bin/activate # linux/macos
-
+```
+- Mematikan environment
+```
 deactivate
+```
 
+- Menginstall installasi yang dibutuhkan dalam project
+```
 pip install -r requirements.txt
+```
 
+- Menghidupkan environment notebook
+```
 python -m ipykernel install --user --name=env --display-name "Python env"
+```
 
-
+- Menjalankan mlflow
+```
 mlflow ui
 python Membangun_model/modelling.py
 python Membangun_model/modelling_tuning.py
-
+```
 
 

@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+mlflow.set_tracking_uri("https://dagshub.com/muazahalwyh/my-first-repo.mlflow")
 
 # Create a new MLflow Experiment
 mlflow.set_experiment("Experiment Customer Churn")
