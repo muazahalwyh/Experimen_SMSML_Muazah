@@ -35,3 +35,15 @@ jobs:
           git add Dataset/*
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
+      
+      - name: Upload Dataset artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: preprocessed-dataset
+          path: Preprocessing/Dataset/
+  
+      - name: Upload MLflow logs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mlruns
+          path: Preprocessing/mlruns/
