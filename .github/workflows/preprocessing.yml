@@ -29,14 +29,15 @@ jobs:
       - name: Run preprocessing script
         run: |
           python Preprocessing/automate_Muazah.py
-          - name: Commit updated dataset
-          run: |
-            git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
-            git status
-            git add Preprocessing/Dataset/
-            git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
-            git push
+      
+      - name: Commit updated dataset
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git status
+          git add Preprocessing/Dataset/
+          git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
+          git push
   
       - name: Check output folder
         run: |
