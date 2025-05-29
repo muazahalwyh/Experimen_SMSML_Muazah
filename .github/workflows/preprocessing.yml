@@ -27,11 +27,15 @@ jobs:
       - name: Run preprocessing script
         run: |
           python Preprocessing/automate_Muazah.py
+      
+      - name: Upload preprocessed dataset as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: preprocessed-dataset
+          path: Dataset/
 
-      - name: Commit updated dataset
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add Dataset/*
-          git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
-          git push
+      - name: Upload MLflow logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: mlruns
+          path: mlruns/
