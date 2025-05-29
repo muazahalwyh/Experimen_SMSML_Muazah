@@ -37,13 +37,13 @@ jobs:
           git push
       
       - name: Upload Dataset artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: preprocessed-dataset
           path: Dataset/
   
       - name: Upload MLflow logs artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: mlruns
           path: mlruns/
