@@ -29,20 +29,22 @@ jobs:
       - name: Run preprocessing script
         run: |
           python Preprocessing/automate_Muazah.py
+
+      - name: Show Git status (debug)
+        run: git status
       
       - name: Commit updated dataset
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git status
           git add Preprocessing/Dataset/
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
   
-      - name: Check output folder
+      - name: List contents of Dataset folder (debug)
         run: |
-          echo "Listing Preprocessing/Dataset/"
-          ls -R Preprocessing/Dataset/
+          echo "Files in Preprocessing/Dataset :"
+          ls -lh Preprocessing/Dataset/
   
       - name: Upload Dataset artifact
         uses: actions/upload-artifact@v4
