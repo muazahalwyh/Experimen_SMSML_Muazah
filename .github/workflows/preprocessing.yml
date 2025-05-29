@@ -39,7 +39,7 @@ jobs:
           git push
       
       - name: Upload Dataset artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: preprocessed-dataset
           path: Preprocessing/Dataset/
