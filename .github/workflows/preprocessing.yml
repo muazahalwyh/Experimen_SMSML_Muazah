@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add Dataset/*
+          git add Preprocessing/*
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
 
