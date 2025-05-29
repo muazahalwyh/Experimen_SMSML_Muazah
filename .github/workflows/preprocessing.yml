@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -41,9 +43,3 @@ jobs:
         with:
           name: preprocessed-dataset
           path: Preprocessing/Dataset/
-  
-      - name: Upload MLflow logs artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: mlruns
-          path: Preprocessing/mlruns/
