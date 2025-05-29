@@ -5,23 +5,23 @@ from imblearn.over_sampling import SMOTE # type: ignore
 import os
 from datetime import datetime
 
-def preprocess_data(df, target_col):
-    df_copy = df.copy()
+def preprocess_data(dataframe, target_col):
+    df = dataframe.copy()
 
     # Label Encoding untuk semua kolom kategorikal (tipe object)
-    categorical_cols = df_copy.select_dtypes(include=['object']).columns
+    categorical_cols = df.select_dtypes(include=['object']).columns
     for col in categorical_cols:
         encoder = LabelEncoder()
-        df_copy[col] = encoder.fit_transform(df_copy[col].astype(str))
+        df[col] = encoder.fit_transform(df[col].astype(str))
 
     # Standarisasi untuk kolom numerik (kecuali target)
-    numeric_cols = df_copy.select_dtypes(include=['int64', 'float64']).columns.drop(target_col)
+    numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns.drop(target_col)
     scaler = StandardScaler()
-    df_copy[numeric_cols] = scaler.fit_transform(df_copy[numeric_cols])
+    df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
 
     # Pisahkan fitur dan target
-    X = df_copy.drop(target_col, axis=1)
-    y = df_copy[target_col]
+    X = df.drop(target_col, axis=1)
+    y = df[target_col]
 
     # Split data train-test stratify
     X_train, X_test, y_train, y_test = train_test_split(
@@ -47,5 +47,5 @@ def preprocess_data(df, target_col):
     return X_train_resampled, X_test, y_train_resampled, y_test
 
 if __name__ == "__main__":
-    df = pd.read_csv("Dataset/data_bersih_preprocessing.csv")
-    preprocess_data(df, target_col="Churn Label") 
+    df_raw = pd.read_csv("Dataset/data_bersih_preprocessing.csv").copy()
+    preprocess_data(df_raw, target_col="Churn Label") 
