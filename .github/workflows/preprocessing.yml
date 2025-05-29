@@ -37,9 +37,14 @@ jobs:
           git add Dataset/*
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
-      
+
+      - name: Check output folder
+        run: |
+          echo "Listing Preprocessing/"
+          ls -R Preprocessing/
+              
       - name: Upload Dataset artifact
         uses: actions/upload-artifact@v4
         with:
           name: preprocessed-dataset
-          path: Dataset/processed/
+          path: Preprocessing/
