@@ -1,7 +1,5 @@
 env/
 Preprocessing/.ipynb_checkpoints/
 MSML-Muazah.py/
-mlartifacts/
-mlruns/
 Workflow-CI/
 main.yml
