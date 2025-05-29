@@ -30,9 +30,9 @@ def preprocess_data(df, target_col):
     smote = SMOTE(random_state=42)
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
-    X_train_resampled.to_csv("Preprocessing/Dataset/X_train.csv", index=False)
-    X_test.to_csv("Preprocessing/Dataset/X_test.csv", index=False)
-    y_train_resampled.to_csv("Preprocessing/Dataset/y_train.csv", index=False)
-    y_test.to_csv("Preprocessing/Dataset/y_test.csv", index=False)
+    X_train_resampled.to_csv("Dataset/processed/X_train.csv", index=False)
+    X_test.to_csv("Dataset/processed/X_test.csv", index=False)
+    y_train_resampled.to_csv("Dataset/processed/y_train.csv", index=False)
+    y_test.to_csv("Dataset/processed/y_test.csv", index=False)
     
     return X_train_resampled, X_test, y_train_resampled, y_test
