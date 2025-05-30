@@ -5,12 +5,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # Load data hasil preprocessing
-X_train = pd.read_csv("Dataset/X_train_resampled_20250530_004103.csv")
-y_train = pd.read_csv("Dataset/y_train_resampled_20250530_004103.csv").squeeze()
-X_test = pd.read_csv("Dataset/X_test_20250530_004103.csv")
-y_test = pd.read_csv("Dataset/y_test_20250530_004103.csv").squeeze()
+X_train = pd.read_csv("Membangun_model/Dataset/X_train_resampled.csv")
+y_train = pd.read_csv("Membangun_model/Dataset/y_train_resampled.csv").squeeze()
+X_test = pd.read_csv("Membangun_model/Dataset/X_test.csv")
+y_test = pd.read_csv("Membangun_model/Dataset/y_test.csv").squeeze()
 
-mlflow.set_tracking_uri("https://dagshub.com/muazahalwyh/my-first-repo.mlflow")
+mlflow.set_tracking_uri("https://dagshub.com/muazahalwyh/Experimen_SMSML_Muazah.mlflow")
 
 # Create a new MLflow Experiment
 mlflow.set_experiment("Experiment Customer Churn")
