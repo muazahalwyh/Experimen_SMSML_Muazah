@@ -43,29 +43,29 @@ jobs:
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
 
-      - name: List contents of Dataset folder (debug)
+      - name: List contents of Preprocessing/Dataset (debug)
         run: |
           echo "Files in Preprocessing/Dataset:"
           ls -lh Preprocessing/Dataset/
 
-      - name: List contents of Joblib folder (debug)
+      - name: List contents of Preprocessing/Dataset (debug)
         run: |
           echo "Files in Preprocessing/Joblib:"
           ls -lh Preprocessing/Joblib/
 
-      - name: Upload All Preprocessing Outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: preprocessing-output
-          path: Preprocessing/
-
-      - name: List contents of Joblib folder (debug)
+      - name: List contents of Membangun_model/Dataset (debug)
         run: |
           echo "Files in Membangun_model/Dataset/:"
           ls -lh Membangun_model/Dataset/
-  
-      - name: Upload All Preprocessing Outputs
+
+      - name: Upload All Preprocessing Folder
         uses: actions/upload-artifact@v4
         with:
-          name: preprocessing-output
+          name: preprocessing-folder
+          path: Preprocessing/
+  
+      - name: Upload Dataset for Modelling
+        uses: actions/upload-artifact@v4
+        with:
+          name: dataset-for-modelling
           path: Membangun_model/Dataset/
