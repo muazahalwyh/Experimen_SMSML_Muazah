@@ -35,8 +35,8 @@ def preprocess_data(df, target_col):
     smote = SMOTE(random_state=42)
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
-    # Hapus isi folder lama sebelum simpan file baru
-    for folder in ["Preprocessing/Dataset", "Preprocessing/Joblib", "Membangun_model/Dataset"]:
+    # Buat ulang folder output
+    for folder in ["Preprocessing/Dataset", "Preprocessing/Joblib"]:
         if os.path.exists(folder):
             shutil.rmtree(folder)
         os.makedirs(folder)
@@ -51,13 +51,18 @@ def preprocess_data(df, target_col):
     joblib.dump(encoders, f"Preprocessing/Joblib/encoders.joblib")
     joblib.dump(scaler, f"Preprocessing/Joblib/scaler.joblib")
     joblib.dump(smote, f"Preprocessing/Joblib/smote.joblib")
-    
-    # Simpan file dataset di preprocessing
-    X_train_resampled.to_csv(f"Membangun_model/Dataset/X_train_resampled.csv", index=False)
-    X_test.to_csv(f"Membangun_model/Dataset/X_test.csv", index=False)
-    y_train_resampled.to_csv(f"Membangun_model/Dataset/y_train_resampled.csv", index=False)
-    y_test.to_csv(f"Membangun_model/Dataset/y_test.csv", index=False)
 
+    # Salin hasil dataset ke folder Membangun_model/Dataset
+    model_dataset_dir = "Membangun_model/Dataset"
+    if os.path.exists(model_dataset_dir):
+        shutil.rmtree(model_dataset_dir)
+    os.makedirs(model_dataset_dir)
+
+    for filename in os.listdir("Preprocessing/Dataset"):
+        src_file = os.path.join("Preprocessing/Dataset", filename)
+        dst_file = os.path.join(model_dataset_dir, filename)
+        shutil.copyfile(src_file, dst_file)
+    
     print(f"Preprocessing selesai. Dataset dan artefak/joblib disimpan")
 
     return X_train_resampled, X_test, y_train_resampled, y_test
