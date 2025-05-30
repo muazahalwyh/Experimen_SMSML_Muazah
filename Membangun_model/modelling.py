@@ -3,23 +3,17 @@ import mlflow # type: ignore
 import mlflow.sklearn # type: ignore
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.model_selection import train_test_split
+
+# Load data hasil preprocessing
+X_train = pd.read_csv("Dataset/X_train_resampled_20250530_004103.csv")
+y_train = pd.read_csv("Dataset/y_train_resampled_20250530_004103.csv").squeeze()
+X_test = pd.read_csv("Dataset/X_test_20250530_004103.csv")
+y_test = pd.read_csv("Dataset/y_test_20250530_004103.csv").squeeze()
 
 mlflow.set_tracking_uri("https://dagshub.com/muazahalwyh/my-first-repo.mlflow")
 
 # Create a new MLflow Experiment
 mlflow.set_experiment("Experiment Customer Churn")
-
-data = pd.read_csv("Dataset/data_bersih_preprocessing.csv")
-
-# Split fitur dan target
-X = data.drop("Churn Label", axis=1)
-y = data["Churn Label"]
-
-# Split data train-test
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
 
 # Ambil contoh input untuk log model (harus DataFrame)
 input_example = X_train.iloc[0:5]
@@ -28,6 +22,9 @@ with mlflow.start_run():
     # Set parameter model
     n_estimators = 505
     max_depth = 37
+    
+    # Aktifkan autolog untuk otomatis logging param, metric, model
+    mlflow.autolog() 
 
     # model Random Forest
     model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
@@ -43,10 +40,6 @@ with mlflow.start_run():
     prec = precision_score(y_test, y_pred)
     rec = recall_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
-
-    # Log parameter manual
-    mlflow.log_param("n_estimators", n_estimators)
-    mlflow.log_param("max_depth", max_depth)
 
     # Log metrik manual
     mlflow.log_metric("accuracy", acc)

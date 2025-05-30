@@ -5,7 +5,6 @@ from imblearn.over_sampling import SMOTE # type: ignore
 import os
 import joblib
 import shutil
-from datetime import datetime
 
 def preprocess_data(df, target_col):    
     df_copy = df.copy()
@@ -41,22 +40,19 @@ def preprocess_data(df, target_col):
         if os.path.exists(folder):
             shutil.rmtree(folder)
         os.makedirs(folder)
-    
-    # Tambahkan timestamp agar selalu terdeteksi perubahan
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Simpan file dataset di preprocessing
-    X_train_resampled.to_csv(f"Preprocessing/Dataset/X_train_resampled_{timestamp}.csv", index=False)
-    X_test.to_csv(f"Preprocessing/Dataset/X_test_{timestamp}.csv", index=False)
-    y_train_resampled.to_csv(f"Preprocessing/Dataset/y_train_resampled_{timestamp}.csv", index=False)
-    y_test.to_csv(f"Preprocessing/Dataset/y_test_{timestamp}.csv", index=False)
+    X_train_resampled.to_csv(f"Preprocessing/Dataset/X_train_resampled.csv", index=False)
+    X_test.to_csv(f"Preprocessing/Dataset/X_test.csv", index=False)
+    y_train_resampled.to_csv(f"Preprocessing/Dataset/y_train_resampled.csv", index=False)
+    y_test.to_csv(f"Preprocessing/Dataset/y_test.csv", index=False)
 
     # Simpan artefak/joblib di preprocessing
-    joblib.dump(encoders, f"Preprocessing/Joblib/encoders_{timestamp}.joblib")
-    joblib.dump(scaler, f"Preprocessing/Joblib/scaler_{timestamp}.joblib")
-    joblib.dump(smote, f"Preprocessing/Joblib/smote_{timestamp}.joblib")
+    joblib.dump(encoders, f"Preprocessing/Joblib/encoders.joblib")
+    joblib.dump(scaler, f"Preprocessing/Joblib/scaler.joblib")
+    joblib.dump(smote, f"Preprocessing/Joblib/smote.joblib")
 
-    print(f"Preprocessing selesai. Dataset dan artefak/joblib disimpan dengan timestamp {timestamp}")
+    print(f"Preprocessing selesai. Dataset dan artefak/joblib disimpan")
 
     return X_train_resampled, X_test, y_train_resampled, y_test
 
