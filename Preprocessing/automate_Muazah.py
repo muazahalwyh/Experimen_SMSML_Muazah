@@ -40,21 +40,21 @@ def preprocess_data(df, target_col):
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
    # Buat ulang folder output preprocessing
-    preprocessing_dir = f"Preprocessing/Dataset_{timestamp}"
+    dataset_dir = f"Preprocessing/Dataset_{timestamp}"
     joblib_dir = "Preprocessing/Joblib"
-    if os.path.exists(preprocessing_dir):
-        shutil.rmtree(preprocessing_dir)
-    os.makedirs(preprocessing_dir)
+    if os.path.exists(dataset_dir):
+        shutil.rmtree(dataset_dir)
+    os.makedirs(dataset_dir)
 
     if os.path.exists(joblib_dir):
         shutil.rmtree(joblib_dir)
     os.makedirs(joblib_dir)
 
     # Simpan file dataset di preprocessing
-    X_train_resampled.to_csv(f"{preprocessing_dir}/Dataset/X_train_resampled.csv", index=False)
-    X_test.to_csv(f"{preprocessing_dir}/Dataset/X_test.csv", index=False)
-    y_train_resampled.to_csv(f"{preprocessing_dir}/Dataset/y_train_resampled.csv", index=False)
-    y_test.to_csv(f"{preprocessing_dir}/Dataset/y_test.csv", index=False)
+    X_train_resampled.to_csv(f"{dataset_dir}/X_train_resampled.csv", index=False)
+    X_test.to_csv(f"{dataset_dir}/X_test.csv", index=False)
+    y_train_resampled.to_csv(f"{dataset_dir}/y_train_resampled.csv", index=False)
+    y_test.to_csv(f"{dataset_dir}/y_test.csv", index=False)
 
     # Simpan artefak/joblib di preprocessing
     joblib.dump(encoders, f"{joblib_dir}/encoders_{timestamp}.joblib")
@@ -67,12 +67,12 @@ def preprocess_data(df, target_col):
         shutil.rmtree(model_dataset_dir)
     os.makedirs(model_dataset_dir)
 
-    for filename in os.listdir(preprocessing_dir):
-        src_file = os.path.join(preprocessing_dir, filename)
+    for filename in os.listdir(dataset_dir):
+        src_file = os.path.join(dataset_dir, filename)
         dst_file = os.path.join(model_dataset_dir, filename)
         shutil.copyfile(src_file, dst_file)
 
-    print(f"Preprocessing selesai. Output disimpan di:\n- {preprocessing_dir}\n- {model_dataset_dir}")
+    print(f"Preprocessing selesai. Output disimpan di folder dataset preprocesing dan membangun model")
 
     return X_train_resampled, X_test, y_train_resampled, y_test
 
