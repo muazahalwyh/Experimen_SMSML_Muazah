@@ -32,23 +32,28 @@ jobs:
 
       - name: Show Git status (debug)
         run: git status
-      
+
       - name: Commit updated dataset
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add Preprocessing/Dataset/
+          git add Preprocessing/Joblib/
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
-  
+
       - name: List contents of Dataset folder (debug)
         run: |
-          echo "Files in Preprocessing/Dataset :"
+          echo "Files in Preprocessing/Dataset:"
           ls -lh Preprocessing/Dataset/
-  
-      - name: Upload Dataset artifact
+
+      - name: List contents of Joblib folder (debug)
+        run: |
+          echo "Files in Preprocessing/Joblib:"
+          ls -lh Preprocessing/Joblib/
+
+      - name: Upload All Preprocessing Outputs
         uses: actions/upload-artifact@v4
         with:
-          name: preprocessed-dataset
-          path: Preprocessing/Dataset/
-  
+          name: preprocessing-output
+          path: Preprocessing/
