@@ -38,8 +38,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add Preprocessing/Dataset/
-          git add Preprocessing/Joblib/          
-          git add Membangun_model/Dataset/
+          git add Preprocessing/Joblib/
           git commit -m "Update hasil preprocessing otomatis" || echo "No changes"
           git push
 
@@ -52,16 +51,9 @@ jobs:
         run: |
           echo "Files in Preprocessing/Joblib:"
           ls -lh Preprocessing/Joblib/
-      
-      - name: List contents of Membangun_model folder
-        run: |
-          echo "Membangun_model/Dataset:"
-          ls -lh Membangun_model/Dataset/
 
       - name: Upload All Preprocessing Outputs
         uses: actions/upload-artifact@v4
         with:
           name: preprocessing-output
-          path: |
-            Preprocessing/
-            Membangun_model/Dataset/
+          path: Preprocessing/
