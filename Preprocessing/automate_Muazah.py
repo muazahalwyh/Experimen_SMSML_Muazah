@@ -4,9 +4,10 @@ from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE # type: ignore
 import os
 import joblib
+import shutil
 from datetime import datetime
 
-def preprocess_data(df, target_col):
+def preprocess_data(df, target_col):    
     df_copy = df.copy()
 
     # Label Encoding untuk semua kolom kategorikal (tipe object)
@@ -35,9 +36,11 @@ def preprocess_data(df, target_col):
     smote = SMOTE(random_state=42)
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
-    # Buat folder output
-    os.makedirs("Preprocessing/Dataset", exist_ok=True)
-    os.makedirs("Preprocessing/Joblib", exist_ok=True)
+    # Hapus isi folder lama sebelum simpan file baru
+    for folder in ["Preprocessing/Dataset", "Preprocessing/Joblib"]:
+        if os.path.exists(folder):
+            shutil.rmtree(folder)
+        os.makedirs(folder)
     
     # Tambahkan timestamp agar selalu terdeteksi perubahan
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
