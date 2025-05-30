@@ -42,6 +42,8 @@ def preprocess_data(df, target_col):
             shutil.rmtree(folder)
         os.makedirs(folder)
     
+    os.makedirs("Membangun_model/Dataset", exist_ok=True)
+    
     # Tambahkan timestamp agar selalu terdeteksi perubahan
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -55,6 +57,11 @@ def preprocess_data(df, target_col):
     joblib.dump(encoders, f"Preprocessing/Joblib/encoders_{timestamp}.joblib")
     joblib.dump(scaler, f"Preprocessing/Joblib/scaler_{timestamp}.joblib")
     joblib.dump(smote, f"Preprocessing/Joblib/smote_{timestamp}.joblib")
+    
+    X_train_resampled.to_csv("Membangun_model/Dataset/X_train_resampled.csv", index=False)
+    X_test.to_csv("Membangun_model/Dataset/X_test.csv", index=False)
+    y_train_resampled.to_csv("Membangun_model/Dataset/y_train_resampled.csv", index=False)
+    y_test.to_csv("Membangun_model/Dataset/y_test.csv", index=False)
 
     print(f"Preprocessing selesai. Dataset dan artefak/joblib disimpan dengan timestamp {timestamp}")
 
