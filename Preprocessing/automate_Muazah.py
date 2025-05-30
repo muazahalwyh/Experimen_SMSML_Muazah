@@ -5,9 +5,13 @@ from imblearn.over_sampling import SMOTE # type: ignore
 import os
 import joblib
 import shutil
+from datetime import datetime
 
 def preprocess_data(df, target_col):    
     df_copy = df.copy()
+    
+    # Timestamp untuk versi file/folder
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Label Encoding untuk semua kolom kategorikal (tipe object)
     categorical_cols = df_copy.select_dtypes(include=['object']).columns
@@ -35,35 +39,40 @@ def preprocess_data(df, target_col):
     smote = SMOTE(random_state=42)
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
-    # Buat ulang folder output
-    for folder in ["Preprocessing/Dataset", "Preprocessing/Joblib"]:
-        if os.path.exists(folder):
-            shutil.rmtree(folder)
-        os.makedirs(folder)
+   # Buat ulang folder output preprocessing
+    preprocessing_dir = f"Preprocessing/Dataset_{timestamp}"
+    joblib_dir = "Preprocessing/Joblib"
+    if os.path.exists(preprocessing_dir):
+        shutil.rmtree(preprocessing_dir)
+    os.makedirs(preprocessing_dir)
+
+    if os.path.exists(joblib_dir):
+        shutil.rmtree(joblib_dir)
+    os.makedirs(joblib_dir)
 
     # Simpan file dataset di preprocessing
-    X_train_resampled.to_csv(f"Preprocessing/Dataset/X_train_resampled.csv", index=False)
-    X_test.to_csv(f"Preprocessing/Dataset/X_test.csv", index=False)
-    y_train_resampled.to_csv(f"Preprocessing/Dataset/y_train_resampled.csv", index=False)
-    y_test.to_csv(f"Preprocessing/Dataset/y_test.csv", index=False)
+    X_train_resampled.to_csv(f"{preprocessing_dir}/Dataset/X_train_resampled.csv", index=False)
+    X_test.to_csv(f"{preprocessing_dir}/Dataset/X_test.csv", index=False)
+    y_train_resampled.to_csv(f"{preprocessing_dir}/Dataset/y_train_resampled.csv", index=False)
+    y_test.to_csv(f"{preprocessing_dir}/Dataset/y_test.csv", index=False)
 
     # Simpan artefak/joblib di preprocessing
-    joblib.dump(encoders, f"Preprocessing/Joblib/encoders.joblib")
-    joblib.dump(scaler, f"Preprocessing/Joblib/scaler.joblib")
-    joblib.dump(smote, f"Preprocessing/Joblib/smote.joblib")
+    joblib.dump(encoders, f"{joblib_dir}/encoders_{timestamp}.joblib")
+    joblib.dump(scaler, f"{joblib_dir}/scaler_{timestamp}.joblib")
+    joblib.dump(smote, f"{joblib_dir}/smote_{timestamp}.joblib")
 
-    # Salin hasil dataset ke folder Membangun_model/Dataset
-    model_dataset_dir = "Membangun_model/Dataset"
+    # Salin ke folder Membangun_model/Dataset
+    model_dataset_dir = f"Membangun_model/Dataset_{timestamp}"
     if os.path.exists(model_dataset_dir):
         shutil.rmtree(model_dataset_dir)
     os.makedirs(model_dataset_dir)
 
-    for filename in os.listdir("Preprocessing/Dataset"):
-        src_file = os.path.join("Preprocessing/Dataset", filename)
+    for filename in os.listdir(preprocessing_dir):
+        src_file = os.path.join(preprocessing_dir, filename)
         dst_file = os.path.join(model_dataset_dir, filename)
         shutil.copyfile(src_file, dst_file)
-    
-    print(f"Preprocessing selesai. Dataset dan artefak/joblib disimpan")
+
+    print(f"Preprocessing selesai. Output disimpan di:\n- {preprocessing_dir}\n- {model_dataset_dir}")
 
     return X_train_resampled, X_test, y_train_resampled, y_test
 
