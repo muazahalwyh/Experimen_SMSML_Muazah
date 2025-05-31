@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/411520808552535301/72dba1f2b9f14443896f43c3fd4c30a2/artifacts
+end_time: 1748591385094
+entry_point_name: ''
+experiment_id: '411520808552535301'
+lifecycle_stage: active
+run_id: 72dba1f2b9f14443896f43c3fd4c30a2
+run_name: Tuning_1000_38
+run_uuid: 72dba1f2b9f14443896f43c3fd4c30a2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748591345745
+status: 3
+tags: []
+user_id: ASUS

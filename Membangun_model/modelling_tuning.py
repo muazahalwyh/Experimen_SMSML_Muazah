@@ -2,8 +2,7 @@ import pandas as pd
 import mlflow # type: ignore
 import mlflow.sklearn # type: ignore
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import numpy as np
 
 mlflow.set_tracking_uri("https://dagshub.com/muazahalwyh/Experimen_SMSML_Muazah.mlflow")
@@ -31,13 +30,22 @@ for n_estimators in n_estimators_range:
             model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
-            acc = accuracy_score(X_test, y_test)
 
             # Log parameter dan metric manual
+            # Hitungan metrik
+            acc = accuracy_score(y_test, y_pred)
+            prec = precision_score(y_test, y_pred)
+            rec = recall_score(y_test, y_pred)
+            f1 = f1_score(y_test, y_pred)
+
+            # Log metrik manual
             mlflow.log_param("n_estimators", n_estimators)
             mlflow.log_param("max_depth", max_depth)
             mlflow.log_metric("accuracy", acc)
-
+            mlflow.log_metric("precision", prec)
+            mlflow.log_metric("recall", rec)
+            mlflow.log_metric("f1_score", f1)
+            
             # Simpan model terbaik
             if acc > best_accuracy:
                 best_accuracy = acc

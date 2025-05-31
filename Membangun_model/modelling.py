@@ -10,7 +10,7 @@ y_train = pd.read_csv("Membangun_model/Dataset/y_train_resampled.csv").squeeze()
 X_test = pd.read_csv("Membangun_model/Dataset/X_test.csv")
 y_test = pd.read_csv("Membangun_model/Dataset/y_test.csv").squeeze()
 
-mlflow.set_tracking_uri("https://dagshub.com/muazahalwyh/Experimen_SMSML_Muazah.mlflow")
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 # Create a new MLflow Experiment
 mlflow.set_experiment("Experiment Customer Churn")
@@ -56,22 +56,3 @@ with mlflow.start_run():
 
     print("Model training dan logging selesai.")
     print(f"Accuracy: {acc:.4f}, Precision: {prec:.4f}, Recall: {rec:.4f}, F1-Score: {f1:.4f}")
-
-# with mlflow.start_run():
-#     # Log parameters
-#     n_estimators = 505
-#     max_depth = 37
-#     mlflow.autolog()
-#     # Train model
-#     model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
-#     mlflow.sklearn.log_model(
-#         sk_model=model,
-#         artifact_path="model",
-#         input_example=input_example
-#     )
-#     model.fit(X_train, y_train)
-#     # Log metrics
-#     accuracy = model.score(X_test, y_test)
-#     mlflow.log_metric("accuracy", accuracy)
-    
-# print(f"Training selesai dengan akurasi: {accuracy:.4f}")
